@@ -27,13 +27,13 @@ typedef struct rb_root {
     Node *node;
 } RBRoot;
 
-// 創建红黑树，返回"红黑樹的根"！
+// 創建紅黑树，return 紅黑樹的根(root)
 RBRoot* create_rbtree();
 
-// 銷毁红黑树
+// 銷毁紅黑树
 void destroy_rbtree(RBRoot *root);
 
-// 將節點插入到红黑树中。插入成功，返回0；失敗返回-1。
+// 將節點插入到紅黑樹中。插入成功，return 0；失敗return -1。
 int insert_rbtree(RBRoot *root, Type key);
 
 // 删除節點(key為節點的值)
@@ -60,7 +60,7 @@ int rbtree_search(RBRoot *root, Type key);
 #define rb_set_color(r,c)  do { (r)->color = (c); } while (0)
 
 /*
- * 創建红黑树，返回"红黑树的根"！
+ * 創建红黑樹，返回"紅黑樹的根"！
  */
 RBRoot* create_rbtree()
 {
@@ -72,7 +72,7 @@ RBRoot* create_rbtree()
 
 
 /*
- * (遞迴實現)查找"红黑樹x"中鍵值為key的節點
+ * (遞迴實現)查找"紅黑樹x"中鍵值為key的節點
  */
 static Node* search(RBTree x, Type key)
 {
@@ -164,20 +164,20 @@ static void rbtree_right_rotate(RBRoot *root, Node *y)
 }
 
 /*
- * 红黑樹插入修正函數
+ * 紅黑樹插入修正函數
  *
- * 在向红黑树中插入節點之后(失去平衡)，再調用該函數；
- * 目的是將它重新塑造成一颗红黑樹。
+ * 在向紅黑樹中插入節點之后(失去平衡)，再調用該函數；
+ * 目的是將它重新塑造成一顆紅黑樹。
  *
  * 参數說明：
- *     root 红黑樹的根
- *     node 插入的節點       // 對應《算法導論》中的z
+ *     root 紅黑樹的根
+ *     node 插入的節點       // 對應《algorithm》中的z
  */
 static void rbtree_insert_fixup(RBRoot *root, Node *node)
 {
     Node *parent, *gparent;
 
-    // 若“父節點存在，并且父節點的顏色是紅色”
+    // 若“父節點存在，並且父節點的顏色是紅色”
     while ((parent = rb_parent(node)) && rb_is_red(parent))
     {
         gparent = rb_parent(parent);
@@ -215,7 +215,7 @@ static void rbtree_insert_fixup(RBRoot *root, Node *node)
         }
         else//若“z的父節點”是“z的祖父節點的右孩子”
         {
-            // Case 1条件：叔叔節點是红色
+            // Case 1條件：叔叔節點是红色
             {
                 Node *uncle = gparent->left;
                 if (uncle && rb_is_red(uncle))
@@ -228,7 +228,7 @@ static void rbtree_insert_fixup(RBRoot *root, Node *node)
                 }
             }
 
-            // Case 2条件：叔叔是黑色，且當前節點是左孩子
+            // Case 2條件：叔叔是黑色，且當前節點是左孩子
             if (parent->left == node)
             {
                 Node *tmp;
@@ -238,30 +238,30 @@ static void rbtree_insert_fixup(RBRoot *root, Node *node)
                 node = tmp;
             }
 
-            // Case 3条件：叔叔是黑色，且當前節點是右孩子。
+            // Case 3條件：叔叔是黑色，且當前節點是右孩子。
             rb_set_black(parent);
             rb_set_red(gparent);
             rbtree_left_rotate(root, gparent);
         }
     }
 
-    // 将根节点设为黑色
+    // 將根節點設為黑色
     rb_set_black(root->node);
 }
 
 /*
- * 添加節點：將節點(node)插入到红黑樹中
+ * 添加節點：將節點(node)插入到紅黑樹中
  *
  * 参數說明：
- *     root 红黑樹的根
- *     node 插入的節點        // 對應《算法導論》中的z
+ *     root 紅黑樹的根
+ *     node 插入的節點        // 對應《algorithm》中的z
  */
 static void rbtree_insert(RBRoot *root, Node *node)
 {
     Node *y = NULL;
     Node *x = root->node;
 
-    // 1. 将红黑樹當作一颗二叉查找树，将節點添加到二叉查找樹中。
+    // 1. 將紅黑樹當作一棵二叉查找樹，將節點添加到二叉查找樹中。
     while (x != NULL)
     {
         y = x;
@@ -316,10 +316,10 @@ static Node* create_rbtree_node(Type key, Node *parent, Node *left, Node* right)
 }
 
 /*
- * 新建節點(節點鍵值為key)，並将其插入到红黑樹中
+ * 新建節點(節點鍵值為key)，並將其插入到紅黑樹中
  *
  * 参數說明：
- *     root 红黑樹的根
+ *     root 紅黑樹的根
  *     key 插入節點的鍵值
  * 返回值：
  *     0，插入成功
@@ -329,8 +329,8 @@ int insert_rbtree(RBRoot *root, Type key)
 {
     Node *node;    // 新建節點
 
-    // 不允许插入相同键值的节点。
-    // (若想允許插入相同鍵值的節點，注釋掉下面两句話即可！)
+    // 不允許插入相同鍵值的節點。
+    // (若想允許插入相同鍵值的節點，注釋掉下面兩句程式碼即可！)
     if (search(root->node, key) != NULL)
         return -1;
 
@@ -426,7 +426,7 @@ static void rbtree_delete_fixup(RBRoot *root, Node *node, Node *parent)
                     rbtree_left_rotate(root, other);
                     other = parent->left;
                 }
-                // Case 4: x的兄弟w是黑色的；并且w的右孩子是红色的，左孩子任意顏色。
+                // Case 4: x的兄弟w是黑色的；並且w的右孩子是红色的，左孩子任意顏色。
                 rb_set_color(other, rb_color(parent));
                 rb_set_black(parent);
                 rb_set_black(other->left);
