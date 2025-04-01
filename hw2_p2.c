@@ -27,10 +27,10 @@ typedef struct rb_root {
     Node *node;
 } RBRoot;
 
-// 創建紅黑树，return 紅黑樹的根(root)
+// 創建紅黑樹，return 紅黑樹的根(root)
 RBRoot* create_rbtree();
 
-// 銷毁紅黑树
+// 銷毁紅黑樹
 void destroy_rbtree(RBRoot *root);
 
 // 將節點插入到紅黑樹中。插入成功，return 0；失敗return -1。
@@ -40,7 +40,7 @@ int insert_rbtree(RBRoot *root, Type key);
 void delete_rbtree(RBRoot *root, Type key);
 
 
-// (遞迴實現)查找"红黑樹"中键值为key的節點。找到的話，返回0；否則，返回-1。
+// (遞迴實現)查找"紅黑樹"中鍵值为key的節點。找到的話，返回0；否則，返回-1。
 int rbtree_search(RBRoot *root, Type key);
 
 
@@ -60,7 +60,7 @@ int rbtree_search(RBRoot *root, Type key);
 #define rb_set_color(r,c)  do { (r)->color = (c); } while (0)
 
 /*
- * 創建红黑樹，返回"紅黑樹的根"！
+ * 創建紅黑樹，返回"紅黑樹的根"！
  */
 RBRoot* create_rbtree()
 {
